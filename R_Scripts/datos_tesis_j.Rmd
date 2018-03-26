@@ -623,7 +623,6 @@ windRose(data_wide17)
 
 ```{r}
 
-
 # RAMA
 
 rama10_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010CO.xls", sheet = 1, header = T)
@@ -646,12 +645,12 @@ estaciones_comunes_rama10 <- intersect(rama10_a_names,rama10_b_names) %>% inters
 # quedaron 3 estaciones en común
 
 rama10_a_tidy <- rama10_a[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
-rama10_b_tidy <- rama10_b[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "NO")
-rama10_c_tidy <- rama10_c[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "NOX")
-rama10_d_tidy <- rama10_d[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "O3")
-rama10_e_tidy <- rama10_e[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "PM10")
-rama10_f_tidy <- rama10_f[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "PM25")
-rama10_g_tidy <- rama10_g[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "SO2")
+rama10_b_tidy <- rama10_b[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama10_c_tidy <- rama10_c[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama10_d_tidy <- rama10_d[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama10_e_tidy <- rama10_e[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama10_f_tidy <- rama10_f[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama10_g_tidy <- rama10_g[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
 
 rama10 <- rbind(rama10_a_tidy, rama10_b_tidy, rama10_c_tidy, rama10_d_tidy, rama10_e_tidy, rama10_f_tidy, rama10_g_tidy)
 
