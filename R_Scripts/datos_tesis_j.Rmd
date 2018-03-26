@@ -13,6 +13,9 @@ library(tidyr)
 library(plotly)
 library(readr)
 library(openair)
+
+
+source("../funciones.R")
 ```
 
 
@@ -22,218 +25,56 @@ library(openair)
 
 # 2010
 
-# redda10_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010CAH.xls", sheet = 1, header = TRUE)
-# redda10_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010CEH.xls", sheet = 1, header = TRUE)
-# redda10_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010CLH.xls", sheet = 1, header = TRUE)
-# redda10_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010HH.xls", sheet = 1, header = TRUE)
-# redda10_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010KH.xls", sheet = 1, header = TRUE)
-# redda10_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010MGH.xls", sheet = 1, header = TRUE)
-# redda10_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010NAH.xls", sheet = 1, header = TRUE)
-# redda10_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010NH4H.xls", sheet = 1, header = TRUE)
-# redda10_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010NO3H.xls", sheet = 1, header = TRUE)
-# redda10_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010PHH.xls", sheet = 1, header = TRUE)
-# redda10_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010PPH.xls", sheet = 1, header = TRUE)
-# redda10_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA/2010SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda10_A_tidy <- redda10_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda10_B_tidy <- redda10_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda10_C_tidy <- redda10_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda10_D_tidy <- redda10_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda10_E_tidy <- redda10_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda10_F_tidy <- redda10_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda10_G_tidy <- redda10_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda10_H_tidy <- redda10_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda10_I_tidy <- redda10_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda10_J_tidy <- redda10_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda10_K_tidy <- redda10_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda10_L_tidy <- redda10_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/10REDDA")
+tidy_pollution(pattern = "redda_2010", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # 
 # redda10 <- Reduce(function(...) merge(..., all=T), list(redda10_A_tidy, redda10_B_tidy, redda10_C_tidy, redda10_D_tidy, redda10_E_tidy, redda10_F_tidy, redda10_G_tidy, redda10_H_tidy, redda10_I_tidy, redda10_J_tidy, redda10_K_tidy, redda10_L_tidy))
 # 
 # # 2011
-# 
-# redda11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011CAH.xls", sheet = 1, header = TRUE)
-# redda11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011CEH.xls", sheet = 1, header = TRUE)
-# redda11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011CLH.xls", sheet = 1, header = TRUE)
-# redda11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011HH.xls", sheet = 1, header = TRUE)
-# redda11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011KH.xls", sheet = 1, header = TRUE)
-# redda11_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011MGH.xls", sheet = 1, header = TRUE)
-# redda11_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011NAH.xls", sheet = 1, header = TRUE)
-# redda11_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011NH4H.xls", sheet = 1, header = TRUE)
-# redda11_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011NO3H.xls", sheet = 1, header = TRUE)
-# redda11_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011PHH.xls", sheet = 1, header = TRUE)
-# redda11_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011PPH.xls", sheet = 1, header = TRUE)
-# redda11_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA/2011SO4H.xls", sheet = 1, header = TRUE)
-# 
-# 
-# redda11_A_tidy <- redda11_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda11_B_tidy <- redda11_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda11_C_tidy <- redda11_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda11_D_tidy <- redda11_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda11_E_tidy <- redda11_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda11_F_tidy <- redda11_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda11_G_tidy <- redda11_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda11_H_tidy <- redda11_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda11_I_tidy <- redda11_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda11_J_tidy <- redda11_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda11_K_tidy <- redda11_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda11_L_tidy <- redda11_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/11REDDA")
+tidy_pollution(pattern = "redda_2011", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda11 <- Reduce(function(...) merge(..., all=T), list(redda11_A_tidy, redda11_B_tidy, redda11_C_tidy, redda11_D_tidy, redda11_E_tidy, redda11_F_tidy, redda11_G_tidy, redda11_H_tidy, redda11_I_tidy, redda11_J_tidy, redda11_K_tidy, redda11_L_tidy))
 # 
 # # 2012
-# 
-# redda12_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012CAH.xls", sheet = 1, header = TRUE)
-# redda12_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012CEH.xls", sheet = 1, header = TRUE)
-# redda12_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012CLH.xls", sheet = 1, header = TRUE)
-# redda12_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012HH.xls", sheet = 1, header = TRUE)
-# redda12_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012KH.xls", sheet = 1, header = TRUE)
-# redda12_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012MGH.xls", sheet = 1, header = TRUE)
-# redda12_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012NAH.xls", sheet = 1, header = TRUE)
-# redda12_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012NH4H.xls", sheet = 1, header = TRUE)
-# redda12_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012NO3H.xls", sheet = 1, header = TRUE)
-# redda12_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012PHH.xls", sheet = 1, header = TRUE)
-# redda12_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012PPH.xls", sheet = 1, header = TRUE)
-# redda12_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA/2012SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda12_A_tidy <- redda12_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda12_B_tidy <- redda12_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda12_C_tidy <- redda12_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda12_D_tidy <- redda12_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda12_E_tidy <- redda12_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda12_F_tidy <- redda12_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda12_G_tidy <- redda12_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda12_H_tidy <- redda12_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda12_I_tidy <- redda12_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda12_J_tidy <- redda12_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda12_K_tidy <- redda12_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda12_L_tidy <- redda12_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/12REDDA")
+tidy_pollution(pattern = "redda_2012", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda12 <- Reduce(function(...) merge(..., all=T), list(redda12_A_tidy, redda12_B_tidy, redda12_C_tidy, redda12_D_tidy, redda12_E_tidy, redda12_F_tidy, redda12_G_tidy, redda12_H_tidy, redda12_I_tidy, redda12_J_tidy, redda12_K_tidy, redda12_L_tidy))
 # 
 # # 2013
-# 
-# redda13_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013CAH.xls", sheet = 1, header = TRUE)
-# redda13_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013CEH.xls", sheet = 1, header = TRUE)
-# redda13_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013CLH.xls", sheet = 1, header = TRUE)
-# redda13_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013HH.xls", sheet = 1, header = TRUE)
-# redda13_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013KH.xls", sheet = 1, header = TRUE)
-# redda13_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013MGH.xls", sheet = 1, header = TRUE)
-# redda13_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013NAH.xls", sheet = 1, header = TRUE)
-# redda13_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013NH4H.xls", sheet = 1, header = TRUE)
-# redda13_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013NO3H.xls", sheet = 1, header = TRUE)
-# redda13_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013PHH.xls", sheet = 1, header = TRUE)
-# redda13_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013PPH.xls", sheet = 1, header = TRUE)
-# redda13_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA/2013SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda13_A_tidy <- redda13_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda13_B_tidy <- redda13_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda13_C_tidy <- redda13_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda13_D_tidy <- redda13_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda13_E_tidy <- redda13_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda13_F_tidy <- redda13_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda13_G_tidy <- redda13_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda13_H_tidy <- redda13_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda13_I_tidy <- redda13_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda13_J_tidy <- redda13_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda13_K_tidy <- redda13_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda13_L_tidy <- redda13_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/13REDDA")
+tidy_pollution(pattern = "redda_2013", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda13 <- Reduce(function(...) merge(..., all=T), list(redda13_A_tidy, redda13_B_tidy, redda13_C_tidy, redda13_D_tidy, redda13_E_tidy, redda13_F_tidy, redda13_G_tidy, redda13_H_tidy, redda13_I_tidy, redda13_J_tidy, redda13_K_tidy, redda13_L_tidy))
 # 
 # # 2014
-# 
-# redda14_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014CAH.xls", sheet = 1, header = TRUE)
-# redda14_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014CEH.xls", sheet = 1, header = TRUE)
-# redda14_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014CLH.xls", sheet = 1, header = TRUE)
-# redda14_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014HH.xls", sheet = 1, header = TRUE)
-# redda14_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014KH.xls", sheet = 1, header = TRUE)
-# redda14_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014MGH.xls", sheet = 1, header = TRUE)
-# redda14_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014NAH.xls", sheet = 1, header = TRUE)
-# redda14_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014NH4H.xls", sheet = 1, header = TRUE)
-# redda14_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014NO3H.xls", sheet = 1, header = TRUE)
-# redda14_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014PHH.xls", sheet = 1, header = TRUE)
-# redda14_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014PPH.xls", sheet = 1, header = TRUE)
-# redda14_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA/2014SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda14_A_tidy <- redda14_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda14_B_tidy <- redda14_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda14_C_tidy <- redda14_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda14_D_tidy <- redda14_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda14_E_tidy <- redda14_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda14_F_tidy <- redda14_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda14_G_tidy <- redda14_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda14_H_tidy <- redda14_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda14_I_tidy <- redda14_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda14_J_tidy <- redda14_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda14_K_tidy <- redda14_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda14_L_tidy <- redda14_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+redda14_A <- read.xls("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/14REDDA")
+tidy_pollution(pattern = "redda_2014", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda14 <- Reduce(function(...) merge(..., all=T), list(redda14_A_tidy, redda14_B_tidy, redda14_C_tidy, redda14_D_tidy, redda14_E_tidy, redda14_F_tidy, redda14_G_tidy, redda14_H_tidy, redda14_I_tidy, redda14_J_tidy, redda14_K_tidy, redda14_L_tidy))
 # 
 # # 2015
-# 
-# redda15_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015CAH.xls", sheet = 1, header = TRUE)
-# redda15_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015CEH.xls", sheet = 1, header = TRUE)
-# redda15_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015CLH.xls", sheet = 1, header = TRUE)
-# redda15_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015HH.xls", sheet = 1, header = TRUE)
-# redda15_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015KH.xls", sheet = 1, header = TRUE)
-# redda15_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015MGH.xls", sheet = 1, header = TRUE)
-# redda15_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015NAH.xls", sheet = 1, header = TRUE)
-# redda15_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015NH4H.xls", sheet = 1, header = TRUE)
-# redda15_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015NO3H.xls", sheet = 1, header = TRUE)
-# redda15_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015PHH.xls", sheet = 1, header = TRUE)
-# redda15_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015PPH.xls", sheet = 1, header = TRUE)
-# redda15_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA/2015SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda15_A_tidy <- redda15_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda15_B_tidy <- redda15_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda15_C_tidy <- redda15_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda15_D_tidy <- redda15_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda15_E_tidy <- redda15_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda15_F_tidy <- redda15_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda15_G_tidy <- redda15_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda15_H_tidy <- redda15_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda15_I_tidy <- redda15_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda15_J_tidy <- redda15_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda15_K_tidy <- redda15_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda15_L_tidy <- redda15_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/15REDDA")
+tidy_pollution(pattern = "redda_2015", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda15 <- Reduce(function(...) merge(..., all=T), list(redda15_A_tidy, redda15_B_tidy, redda15_C_tidy, redda15_D_tidy, redda15_E_tidy, redda15_F_tidy, redda15_G_tidy, redda15_H_tidy, redda15_I_tidy, redda15_J_tidy, redda15_K_tidy, redda15_L_tidy))
 # 
 # # 2016
-# 
-# redda16_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016CAH.xls", sheet = 1, header = TRUE)
-# redda16_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016CEH.xls", sheet = 1, header = TRUE)
-# redda16_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016CLH.xls", sheet = 1, header = TRUE)
-# redda16_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016HH.xls", sheet = 1, header = TRUE)
-# redda16_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016KH.xls", sheet = 1, header = TRUE)
-# redda16_F <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016MGH.xls", sheet = 1, header = TRUE)
-# redda16_G <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016NAH.xls", sheet = 1, header = TRUE)
-# redda16_H <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016NH4H.xls", sheet = 1, header = TRUE)
-# redda16_I <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016NO3H.xls", sheet = 1, header = TRUE)
-# redda16_J <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016PHH.xls", sheet = 1, header = TRUE)
-# redda16_K <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016PPH.xls", sheet = 1, header = TRUE)
-# redda16_L <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA/2016SO4H.xls", sheet = 1, header = TRUE)
-# 
-# redda16_A_tidy <- redda16_A %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CAH")
-# redda16_B_tidy <- redda16_B %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CEH")
-# redda16_C_tidy <- redda16_C %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "CLH")
-# redda16_D_tidy <- redda16_D %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "HH")
-# redda16_E_tidy <- redda16_E %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "KH")
-# redda16_F_tidy <- redda16_F %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "MGH")
-# redda16_G_tidy <- redda16_G %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NAH")
-# redda16_H_tidy <- redda16_H %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NA4H")
-# redda16_I_tidy <- redda16_I %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "NO3H")
-# redda16_J_tidy <- redda16_J %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PH")
-# redda16_K_tidy <- redda16_K %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "PPH")
-# redda16_L_tidy <- redda16_L %>% gather(estaciones, valor, LOM:LAA, -FECHA) %>% mutate(pollutant = "SO4H")
-# 
+
+read_assign_all("redda", "/Users/Vanessa/Desktop/Datos_Excel/REDDA/16REDDA")
+tidy_pollution(pattern = "redda_2016", cols = c("FECHA", "TLA", "MER", "SAG"))
+
 # redda16 <- Reduce(function(...) merge(..., all=T), list(redda16_A_tidy, redda16_B_tidy, redda16_C_tidy, redda16_D_tidy, redda16_E_tidy, redda16_F_tidy, redda16_G_tidy, redda16_H_tidy, redda16_I_tidy, redda16_J_tidy, redda16_K_tidy, redda16_L_tidy))
 
 # NO HAY 2017
 ```
-
 
 ```{r}
 redda <- rbind(redda10, redda11, redda13, redda14, redda15, redda16) # Arreglar REDDA 12
@@ -246,11 +87,9 @@ redda <- read.csv("/Users/Vanessa/Desktop/Datos_Excel/redda.csv")
 ```
 
 # Serie de Tiempo por Pollutant (17) con REDDA
-
 ```{r}
 ggplotly(ggplot(redda, aes(x = FECHA, y = valor, color = estaciones)) + geom_line() + facet_grid(pollutant ~ .) + theme_bw() )
 ```
-
 
 # D-V-J
 
@@ -276,30 +115,34 @@ ggplot(df3, aes(x = date, y = value, color = as.factor(type))) + geom_line() + t
 ###  REDMA
 
 ```{r}
-# REDMA 
+# REDMA 10
 
-redma10_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA/2010PbPM10.xls")
-redma10_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA/2010PbPST.xls")
-redma10_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA/2010PM10.xls")
-redma10_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA/2010PM25.xls")
-redma10_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA/2010PST.xls")
+read_assign_all("redma", "/Users/Vanessa/Desktop/Datos_Excel/REDMA/10REDMA")
 
-redma10_A_names <- names(redma10_A) 
-redma10_B_names <- names(redma10_B) 
-redma10_C_names <- names(redma10_C) 
-redma10_D_names <- names(redma10_D) 
-redma10_E_names <- names(redma10_E) 
+estaciones_comunes_redma_2010 <- names_all("redma_2010") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes <- intersect(redma10_A_names,redma10_B_names) %>% intersect(redma10_C_names)  %>% intersect(redma10_C_names) %>%  intersect(redma10_D_names) %>%  intersect(redma10_E_names) 
+tidy_pollution(pattern = "redma_2010", cols = estaciones_comunes_redma_2010)
+
+# # REDMA 11
+
+read_assign_all("redma", "/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA")
+
+estaciones_comunes_redma_2011 <- names_all("redma_2011") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "redma_2011", cols = estaciones_comunes_redma_2011)
+
 # quedaron 5 estaciones en común
 
-redma10_A_tidy <- redma10_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
-  
+# REDMA
+
+read_assign_all("redma", "/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA")
+
+estaciones_comunes_redma_2012 <- names_all("redma_2012") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "redma_2012", cols = estaciones_comunes_redma_2012)
+
+# quedaron 5 estaciones en común
 ```
-
-
-
-
 
 
 ### REDMET - Red de meteorología y radiacción (TMP, WDR, WDP, RH)
@@ -308,187 +151,107 @@ Se orgnaizaron por año:
 RH, TMP, WDR, WDS para cada año desde el 2010 hasta lel 2017
 Se tomaron en comun las estaciones comunes para cada data set y conformar el año 
 ```{r, eval=F, echo=T}
-
 # REDMET
 
-redmet10_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/10REDMET/2010RH.xls")  
-redmet10_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/10REDMET/2010TMP.xls") 
-redmet10_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/10REDMET/2010WDR.xls") 
-redmet10_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/10REDMET/2010WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/10REDMET")
 
-redmet10_A_names <- names(redmet10_A)
-redmet10_B_names <- names(redmet10_B)
-redmet10_C_names <- names(redmet10_C)
-redmet10_D_names <- names(redmet10_D)
+estaciones_comunes_redmet_2010 <- names_all("redmet_2010") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet10 <- intersect(redmet10_A_names,redmet10_B_names) %>% intersect(redmet10_C_names)  %>% intersect(redmet10_C_names) %>%  intersect(redmet10_D_names) 
+tidy_pollution(pattern = "redmet_2010", cols = estaciones_comunes_redmet_2010)
+
 # quedaron 15 estaciones en común
-
-redmet10_A_tidy <- redmet10_A[ ,estaciones_comunes_redmet] %>% gather(estaciones, valor, TAC:SUR, -FECHA) %>% mutate(pollutant = "RH")
-redmet10_B_tidy <- redmet10_B[ ,estaciones_comunes_redmet] %>% gather(estaciones, valor, TAC:SUR, -FECHA) %>% mutate(pollutant = "TMP")
-redmet10_C_tidy <- redmet10_C[ ,estaciones_comunes_redmet] %>% gather(estaciones, valor, TAC:SUR, -FECHA) %>% mutate(pollutant = "WDR")
-redmet10_D_tidy <- redmet10_D[ ,estaciones_comunes_redmet] %>% gather(estaciones, valor, TAC:SUR, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet10 <- rbind(redmet10_A_tidy, redmet10_B_tidy, redmet10_C_tidy, redmet10_D_tidy)
 saveRDS(redmet10, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet10.rds")
 
 # 2011
 
-redmet11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/11REDMET/2011RH.xls")  
-redmet11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/11REDMET/2011TMP.xls") 
-redmet11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/11REDMET/2011WDR.xls") 
-redmet11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/11REDMET/2011WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/11REDMET")
 
-redmet11_A_names <- names(redmet11_A)
-redmet11_B_names <- names(redmet11_B)
-redmet11_C_names <- names(redmet11_C)
-redmet11_D_names <- names(redmet11_D)
+estaciones_comunes_redmet_2011 <- names_all("redmet_2011") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet11 <- intersect(redmet11_A_names,redmet11_B_names) %>% intersect(redmet11_C_names)  %>% intersect(redmet11_C_names) %>%  intersect(redmet11_D_names) 
+tidy_pollution(pattern = "redmet_2011", cols = estaciones_comunes_redmet_2011)
+
 # quedaron 15 estaciones en común
-
-redmet11_A_tidy <- redmet11_A[ ,estaciones_comunes_redmet11] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet11_B_tidy <- redmet11_B[ ,estaciones_comunes_redmet11] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet11_C_tidy <- redmet11_C[ ,estaciones_comunes_redmet11] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet11_D_tidy <- redmet11_D[ ,estaciones_comunes_redmet11] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet11 <- rbind(redmet11_A_tidy, redmet11_B_tidy, redmet11_C_tidy, redmet11_D_tidy)
 saveRDS(redmet11, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet11.rds")
 
 # 2012
 
-redmet12_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/12REDMET/2012RH.xls")  
-redmet12_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/12REDMET/2012TMP.xls") 
-redmet12_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/12REDMET/2012WDR.xls") 
-redmet12_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/12REDMET/2012WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/12REDMET")
 
-redmet12_A_names <- names(redmet12_A)
-redmet12_B_names <- names(redmet12_B)
-redmet12_C_names <- names(redmet12_C)
-redmet12_D_names <- names(redmet12_D)
+estaciones_comunes_redmet_2012 <- names_all("redmet_2012") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet12 <- intersect(redmet12_A_names,redmet12_B_names) %>% intersect(redmet12_C_names)  %>% intersect(redmet12_C_names) %>%  intersect(redmet12_D_names) 
+tidy_pollution(pattern = "redmet_2012", cols = estaciones_comunes_redmet_2012)
+
 # quedaron __ estaciones en común
-
-redmet12_A_tidy <- redmet12_A[ ,estaciones_comunes_redmet12] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet12_B_tidy <- redmet12_B[ ,estaciones_comunes_redmet12] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet12_C_tidy <- redmet12_C[ ,estaciones_comunes_redmet12] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet12_D_tidy <- redmet12_D[ ,estaciones_comunes_redmet12] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet12 <- rbind(redmet12_A_tidy, redmet12_B_tidy, redmet12_C_tidy, redmet12_D_tidy)
 saveRDS(redmet12, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet12.rds")
 
 # 2013
 
-redmet13_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/13REDMET/2013RH.xls")  
-redmet13_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/13REDMET/2013TMP.xls") 
-redmet13_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/13REDMET/2013WDR.xls") 
-redmet13_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/13REDMET/2013WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/13REDMET")
 
-redmet13_A_names <- names(redmet13_A)
-redmet13_B_names <- names(redmet13_B)
-redmet13_C_names <- names(redmet13_C)
-redmet13_D_names <- names(redmet13_D)
+estaciones_comunes_redmet_2013 <- names_all("redmet_2013") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet13 <- intersect(redmet13_A_names,redmet13_B_names) %>% intersect(redmet13_C_names)  %>% intersect(redmet13_C_names) %>%  intersect(redmet13_D_names) 
+tidy_pollution(pattern = "redmet_2013", cols = estaciones_comunes_redmet_2013)
+
 # quedaron __ estaciones en común
-
-redmet13_A_tidy <- redmet13_A[ ,estaciones_comunes_redmet13] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet13_B_tidy <- redmet13_B[ ,estaciones_comunes_redmet13] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet13_C_tidy <- redmet13_C[ ,estaciones_comunes_redmet13] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet13_D_tidy <- redmet13_D[ ,estaciones_comunes_redmet13] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet13 <- rbind(redmet13_A_tidy, redmet13_B_tidy, redmet13_C_tidy, redmet13_D_tidy)
 saveRDS(redmet13, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet13.rds")
 
 # 2014
 
-redmet14_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/14REDMET/2014RH.xls")  
-redmet14_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/14REDMET/2014TMP.xls") 
-redmet14_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/14REDMET/2014WDR.xls") 
-redmet14_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/14REDMET/2014WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/14REDMET")
 
-redmet14_A_names <- names(redmet14_A)
-redmet14_B_names <- names(redmet14_B)
-redmet14_C_names <- names(redmet14_C)
-redmet14_D_names <- names(redmet14_D)
+estaciones_comunes_redmet_2014 <- names_all("redmet_2014") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet14 <- intersect(redmet14_A_names,redmet14_B_names) %>% intersect(redmet14_C_names)  %>% intersect(redmet14_C_names) %>%  intersect(redmet14_D_names) 
+tidy_pollution(pattern = "redmet_2014", cols = estaciones_comunes_redmet_2014)
+
 # quedaron __ estaciones en común
-
-redmet14_A_tidy <- redmet14_A[ ,estaciones_comunes_redmet14] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet14_B_tidy <- redmet14_B[ ,estaciones_comunes_redmet14] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet14_C_tidy <- redmet14_C[ ,estaciones_comunes_redmet14] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet14_D_tidy <- redmet14_D[ ,estaciones_comunes_redmet14] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet14 <- rbind(redmet14_A_tidy, redmet14_B_tidy, redmet14_C_tidy, redmet14_D_tidy)
 saveRDS(redmet14, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet14.rds")
 
 # 2015
 
-redmet15_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/15REDMET/2015RH.xls")  
-redmet15_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/15REDMET/2015TMP.xls") 
-redmet15_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/15REDMET/2015WDR.xls") 
-redmet15_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/15REDMET/2015WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/15REDMET")
 
-redmet15_A_names <- names(redmet15_A)
-redmet15_B_names <- names(redmet15_B)
-redmet15_C_names <- names(redmet15_C)
-redmet15_D_names <- names(redmet15_D)
+estaciones_comunes_redmet_2015 <- names_all("redmet_2015") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet15 <- intersect(redmet15_A_names,redmet15_B_names) %>% intersect(redmet15_C_names)  %>% intersect(redmet15_C_names) %>%  intersect(redmet15_D_names) 
+tidy_pollution(pattern = "redmet_2015", cols = estaciones_comunes_redmet_2015)
+
 # quedaron __ estaciones en común
-
-redmet15_A_tidy <- redmet15_A[ ,estaciones_comunes_redmet15] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet15_B_tidy <- redmet15_B[ ,estaciones_comunes_redmet15] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet15_C_tidy <- redmet15_C[ ,estaciones_comunes_redmet15] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet15_D_tidy <- redmet15_D[ ,estaciones_comunes_redmet15] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet15 <- rbind(redmet15_A_tidy, redmet15_B_tidy, redmet15_C_tidy, redmet15_D_tidy)
 saveRDS(redmet15, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet15.rds")
 
 
 # 2016
-redmet16_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/16REDMET/2016RH.xls")  
-redmet16_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/16REDMET/2016TMP.xls") 
-redmet16_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/16REDMET/2016WDR.xls") 
-redmet16_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/16REDMET/2016WSP.xls") 
 
-redmet16_A_names <- names(redmet16_A)
-redmet16_B_names <- names(redmet16_B)
-redmet16_C_names <- names(redmet16_C)
-redmet16_D_names <- names(redmet16_D)
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/16REDMET")
 
-estaciones_comunes_redmet16 <- intersect(redmet16_A_names,redmet16_B_names) %>% intersect(redmet16_C_names)  %>% intersect(redmet16_C_names) %>%  intersect(redmet16_D_names) 
+estaciones_comunes_redmet_2016 <- names_all("redmet_2016") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "redmet_2016", cols = estaciones_comunes_redmet_2016)
+
 # quedaron __ estaciones en común
-
-redmet16_A_tidy <- redmet16_A[ ,estaciones_comunes_redmet16] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet16_B_tidy <- redmet16_B[ ,estaciones_comunes_redmet16] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet16_C_tidy <- redmet16_C[ ,estaciones_comunes_redmet16] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet16_D_tidy <- redmet16_D[ ,estaciones_comunes_redmet16] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet16 <- rbind(redmet16_A_tidy, redmet16_B_tidy, redmet16_C_tidy, redmet16_D_tidy)
 saveRDS(redmet16, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet16.rds")
 
 # 2017
 
-redmet17_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET/2017RH.xls")  
-redmet17_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET/2017TMP.xls") 
-redmet17_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET/2017WDR.xls") 
-redmet17_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET/2017WSP.xls") 
+read_assign_all("redmet", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET")
 
-redmet17_A_names <- names(redmet17_A)
-redmet17_B_names <- names(redmet17_B)
-redmet17_C_names <- names(redmet17_C)
-redmet17_D_names <- names(redmet17_D)
+estaciones_comunes_redmet_2017 <- names_all("redmet_2017") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_redmet17 <- intersect(redmet17_A_names,redmet17_B_names) %>% intersect(redmet17_C_names)  %>% intersect(redmet17_C_names) %>%  intersect(redmet17_D_names) 
+tidy_pollution(pattern = "redmet_2017", cols = estaciones_comunes_redmet_2017)
+
 # quedaron __ estaciones en común
-
-redmet17_A_tidy <- redmet17_A[ ,estaciones_comunes_redmet17] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "RH")
-redmet17_B_tidy <- redmet17_B[ ,estaciones_comunes_redmet17] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "TMP")
-redmet17_C_tidy <- redmet17_C[ ,estaciones_comunes_redmet17] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WDR")
-redmet17_D_tidy <- redmet17_D[ ,estaciones_comunes_redmet17] %>% gather(estaciones, valor, ACO:XAL, -FECHA) %>% mutate(pollutant = "WSP")
 
 redmet17 <- rbind(redmet17_A_tidy, redmet17_B_tidy, redmet17_C_tidy, redmet17_D_tidy)
 saveRDS(redmet17, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet17.rds")
@@ -496,17 +259,12 @@ saveRDS(redmet17, "/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet17.rds")
 
 Carga de Datos en formato RDS desde 2010 hasta 2017
 ```{r}
-redmet10 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet10.rds")
-redmet11 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet11.rds")
-redmet12 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet12.rds")
-redmet13 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet13.rds")
-redmet14 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet14.rds")
-redmet15 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet15.rds")
-redmet16 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet16.rds")
-redmet17 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/REDMET/redmet17.rds")
+read_assign_all("", "/Users/Vanessa/Desktop/Datos_Excel/REDMET/17REDMET", 
+                pattern = ".rds")
 ```
 
-Formatear datos para hacer graficas de windRose
+# Formatear datos para hacer graficas de windRose
+
 ```{r}
 redmet10_wide <- redmet10 %>% group_by(FECHA, pollutant) %>% #pollutant en este data frame es para indicar parametro: windspeed, relative humidity, wind direction, or temperastura
                           summarise(max_value = max(valor, na.rm = TRUE))  %>% 
@@ -614,322 +372,257 @@ windRose(data_wide17)
 
 ```
 
-
-
-
-
-#### RAMA
-
-
-```{r}
-
 # RAMA
 
-rama10_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010CO.xls", sheet = 1, header = T)
-rama10_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NO.xls", sheet = 1, header = T)
-rama10_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NOX.xls", sheet = 1, header = T)
-rama10_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010O3.xls", sheet = 1, header = T)
-rama10_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM10.xls", sheet = 1, header = T)
-rama10_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM25.xls", sheet = 1, header = T)
-rama10_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010SO2.xls", sheet = 1, header = T)
+```{r, echo=F, eval=F}
+# RAMA
 
-rama10_a_names <- names(rama10_a)
-rama10_b_names <- names(rama10_b)
-rama10_c_names <- names(rama10_c)
-rama10_d_names <- names(rama10_d)
-rama10_e_names <- names(rama10_e)
-rama10_f_names <- names(rama10_f)
-rama10_g_names <- names(rama10_g)
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA")
 
-estaciones_comunes_rama10 <- intersect(rama10_a_names,rama10_b_names) %>% intersect(rama10_c_names)  %>% intersect(rama10_d_names) %>%  intersect(rama10_e_names) %>% intersect(rama10_f_names) %>%  intersect(rama10_g_names) 
+estaciones_comunes_rama_2010 <- names_all("rama_2010") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "rama_2010", cols = estaciones_comunes_rama_2010)
+
 # quedaron 3 estaciones en común
 
-rama10_a_tidy <- rama10_a[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
-rama10_b_tidy <- rama10_b[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
-rama10_c_tidy <- rama10_c[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
-rama10_d_tidy <- rama10_d[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
-rama10_e_tidy <- rama10_e[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
-rama10_f_tidy <- rama10_f[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
-rama10_g_tidy <- rama10_g[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
-
 rama10 <- rbind(rama10_a_tidy, rama10_b_tidy, rama10_c_tidy, rama10_d_tidy, rama10_e_tidy, rama10_f_tidy, rama10_g_tidy)
+saveRDS(rama10, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 
-# saveRDS(rama10, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 rama10 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 
+
 # 2011
-rama11_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011CO.xls")
-rama11_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NO.xls")
-rama11_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NOX.xls")
-rama11_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011O3.xls")
-rama11_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM10.xls")
-rama11_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM25.xls")
-rama11_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011SO2.xls")
 
-rama11_a_names <- names(rama11_a)
-rama11_b_names <- names(rama11_b)
-rama11_c_names <- names(rama11_c)
-rama11_d_names <- names(rama11_d)
-rama11_e_names <- names(rama11_e)
-rama11_f_names <- names(rama11_f)
-rama11_g_names <- names(rama11_g)
+col_comunes <- c("FECHA", "HORA", "TLA", "MER", "SAG")
 
-estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names)
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA")
+
+estaciones_comunes_rama_2011 <- names_all("rama_2011") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "rama_2011", cols = estaciones_comunes_rama_2011)
+
+rama11 <- rbind(rama11_a_tidy, rama11_b_tidy, rama11_c_tidy, rama11_d_tidy, rama11_e_tidy, rama11_f_tidy, rama11_g_tidy)
+saveRDS(rama11, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama11.rds")
+clean.envir("rama11_")
+
+rama11 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama11.rds")
+
 
 # 2012
 
-rama12_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012CO.xls")
-rama12_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NO.xls")
-rama12_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NOX.xls")
-rama12_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/20120O3.xls")
-rama12_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM10.xls")
-rama12_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM25.xls")
-rama12_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012SO2.xls")
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA")
 
-rama12_a_names <- names(rama12_a)
-rama12_b_names <- names(rama12_b)
-rama12_c_names <- names(rama12_c)
-rama12_d_names <- names(rama12_d)
-rama12_e_names <- names(rama12_e)
-rama12_f_names <- names(rama12_f)
-rama12_g_names <- names(rama12_g)
+estaciones_comunes_rama_2012 <- names_all("rama_2012") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names)
+tidy_pollution(pattern = "rama_2012", cols = estaciones_comunes_rama_2012)
+
+rama12 <- rbind(rama12_a_tidy, rama12_b_tidy, rama12_c_tidy, rama12_d_tidy, rama12_e_tidy, rama12_f_tidy, rama12_g_tidy)
+saveRDS(rama12, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama12.rds")
+clean.envir("rama12_")
+
+rama12 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama12.rds")
 
 
 # 2013
 
-rama13_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013CO.xls")
-rama13_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013NO.xls")
-rama13_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013NOX.xls")
-rama13_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013O3.xls")
-rama13_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013PM10.xls")
-rama13_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013PM25.xls")
-rama13_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA/2013SO2.xls")
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/13RAMA")
 
-rama13_a_names <- names(rama13_a)
-rama13_b_names <- names(rama13_b)
-rama13_c_names <- names(rama13_c)
-rama13_d_names <- names(rama13_d)
-rama13_e_names <- names(rama13_e)
-rama13_f_names <- names(rama13_f)
-rama13_g_names <- names(rama13_g)
+estaciones_comunes_rama_2013 <- names_all("rama_2013") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_rama13 <- intersect(rama13_a_names,rama13_b_names) %>% intersect(rama13_c_names)  %>% intersect(rama13_d_names) %>%  intersect(rama13_e_names) %>% intersect(rama13_f_names) %>%  intersect(rama13_g_names)
+tidy_pollution(pattern = "rama_2013", cols = estaciones_comunes_rama_2013)
+
+rama13 <- rbind(rama13_a_tidy, rama13_b_tidy, rama13_c_tidy, rama13_d_tidy, rama13_e_tidy, rama13_f_tidy, rama13_g_tidy)
+saveRDS(rama13, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama13.rds")
+clean.envir("rama13_")
+
+rama13 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama13.rds")
 
 
 # 2014
 
-rama14_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014CO.xls")
-rama14_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014NO.xls")
-rama14_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014NOX.xls")
-rama14_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014O3.xls")
-rama14_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014PM10.xls")
-rama14_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014PM25.xls")
-rama14_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA/2014SO2.xls")
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/14RAMA")
 
-rama14_a_names <- names(rama14_a)
-rama14_b_names <- names(rama14_b)
-rama14_c_names <- names(rama14_c)
-rama14_d_names <- names(rama14_d)
-rama14_e_names <- names(rama14_e)
-rama14_f_names <- names(rama14_f)
-rama14_g_names <- names(rama14_g)
+estaciones_comunes_rama_2014 <- names_all("rama_2014") %>% Reduce(f = intersect, x = .)
 
-estaciones_comunes_rama14 <- intersect(rama14_a_names,rama14_b_names) %>% intersect(rama14_c_names)  %>% intersect(rama14_d_names) %>%  intersect(rama14_e_names) %>% intersect(rama14_f_names) %>%  intersect(rama14_g_names)
+tidy_pollution(pattern = "rama_2014", cols = estaciones_comunes_rama_2014)
+
+rama14 <- rbind(rama14_a_tidy, rama14_b_tidy, rama14_c_tidy, rama14_d_tidy, rama14_e_tidy, rama14_f_tidy, rama14_g_tidy)
+saveRDS(rama14, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama14.rds")
+clean.envir("rama14_")
+
+rama14 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama14.rds")
+
 
 # 2015
-rama15_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015CO.xls")
-rama15_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015NO.xls")
-rama15_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015NOX.xls")
-rama15_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015O3.xls")
-rama15_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015PM10.xls")
-rama15_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015PM25.xls")
-rama15_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015SO2.xls")
 
-rama15_a_names <- names(rama15_a)
-rama15_b_names <- names(rama15_b)
-rama15_c_names <- names(rama15_c)
-rama15_d_names <- names(rama15_d)
-rama15_e_names <- names(rama15_e)
-rama15_f_names <- names(rama15_f)
-rama15_g_names <- names(rama15_g)
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA")
 
-estaciones_comunes_rama15 <- intersect(rama15_a_names,rama15_b_names) %>% intersect(rama15_c_names)  %>% intersect(rama15_d_names) %>%  intersect(rama15_e_names) %>% intersect(rama15_f_names) %>%  intersect(rama15_g_names)
+estaciones_comunes_rama_2015 <- names_all("rama_2015") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "rama_2015", cols = estaciones_comunes_rama_2015)
+
+rama15 <- rbind(rama15_a_tidy, rama15_b_tidy, rama15_c_tidy, rama15_d_tidy, rama15_e_tidy, rama15_f_tidy, rama15_g_tidy)
+saveRDS(rama15, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama15.rds")
+clean.envir("rama15_")
+
+rama15 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama15.rds")
+
 
 # 2016
-rama16_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016CO.xls")
-rama16_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016NO.xls")
-rama16_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016NOX.xls")
-rama16_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016O3.xls")
-rama16_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016PM10.xls")
-rama16_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016PM25.xls")
-rama16_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016SO2.xls")
 
-rama16_a_names <- names(rama16_a)
-rama16_b_names <- names(rama16_b)
-rama16_c_names <- names(rama16_c)
-rama16_d_names <- names(rama16_d)
-rama16_e_names <- names(rama16_e)
-rama16_f_names <- names(rama16_f)
-rama16_g_names <- names(rama16_g)
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA")
 
-estaciones_comunes_rama16 <- intersect(rama16_a_names,rama16_b_names) %>% intersect(rama16_c_names)  %>% intersect(rama16_d_names) %>%  intersect(rama16_e_names) %>% intersect(rama16_f_names) %>%  intersect(rama16_g_names)
+estaciones_comunes_rama_2016 <- names_all("rama_2016") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "rama_2016", cols = estaciones_comunes_rama_2016)
+
+rama16 <- rbind(rama16_a_tidy, rama16_b_tidy, rama16_c_tidy, rama16_d_tidy, rama16_e_tidy, rama16_f_tidy, rama16_g_tidy)
+saveRDS(rama16, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama16.rds")
+clean.envir("rama16_")
+
+rama16 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama16.rds")
 
 # 2017
 
-rama17_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017CO.xls")
-rama17_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017NO.xls")
-rama17_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017NOX.xls")
-rama17_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017O3.xls")
-rama17_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017PM10.xls")
-rama17_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017PM25.xls")
-rama17_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA/2017SO2.xls")
 
-rama17_a_names <- names(rama17_a)
-rama17_b_names <- names(rama17_b)
-rama17_c_names <- names(rama17_c)
-rama17_d_names <- names(rama17_d)
-rama17_e_names <- names(rama17_e)
-rama17_f_names <- names(rama17_f)
-rama17_g_names <- names(rama17_g)
+read_assign_all("rama", "/Users/Vanessa/Desktop/Datos_Excel/RAMA/17RAMA")
 
-estaciones_comunes_rama17 <- intersect(rama17_a_names,rama17_b_names) %>% intersect(rama17_c_names)  %>% intersect(rama17_d_names) %>%  intersect(rama17_e_names) %>% intersect(rama17_f_names) %>%  intersect(rama17_g_names)
+estaciones_comunes_rama_2017 <- names_all("rama_2017") %>% Reduce(f = intersect, x = .)
+
+tidy_pollution(pattern = "rama_2017", cols = estaciones_comunes_rama_2017)
+
+rama17 <- rbind(rama17_a_tidy, rama17_b_tidy, rama17_c_tidy, rama17_d_tidy, rama17_e_tidy, rama17_f_tidy, rama17_g_tidy)
+saveRDS(rama17, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama17.rds")
+clean.envir("rama17_")
+
+rama17 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama17.rds")
+
+
+# juntar todos los años de RAMA por sus estaciones comunes
 
 estaciones_comunes_rama <- intersect(estaciones_comunes_rama10, estaciones_comunes_rama11) %>% intersect(estaciones_comunes_rama12) %>%  intersect(estaciones_comunes_rama13) %>% intersect(estaciones_comunes_rama14) %>% intersect(estaciones_comunes_rama15) %>% intersect(estaciones_comunes_rama16) %>% intersect(estaciones_comunes_rama17)
 
+dim(rama10)
+dim(rama11)
+dim(rama12)
+dim(rama13)
+dim(rama14)
+dim(rama15)
+dim(rama16)
+dim(rama17)
 
-rama_tidy <- 
-rama_tidy <- rama13_a[ ,estaciones_comunes_rama] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "?")
-
+rama <- rbind(rama10, rama11, rama12, rama13, rama14, rama15, rama16, rama17)
+saveRDS(rama, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama.rds")
+saveRDS(rama, "/Users/Vanessa/Desktop/TESIS/DatosParaTrabajar/RAMA/rama.rds")
+clean.envir("rama1")
 ```
 
-
-
-# 2011
 ```{r}
-# RAMA
-
-rama11_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011CO.xls")
-rama11_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NO.xls")
-rama11_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NOX.xls")
-rama11_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011O3.xls")
-rama11_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM10.xls")
-rama11_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM25.xls")
-rama11_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011SO2.xls")
-
-
-rama11_a_names <- names(rama11_a)
-rama11_b_names <- names(rama11_b)
-rama11_c_names <- names(rama11_c)
-rama11_d_names <- names(rama11_d)
-rama11_e_names <- names(rama11_e)
-rama11_f_names <- names(rama11_f)
-rama11_g_names <- names(rama11_g)
-
-estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names) 
-
-# REDA
-
-# REDMA
-
-redma11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPM10.xls")
-redma11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPST.xls")
-redma11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM10.xls")
-redma11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM25.xls")
-redma11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PST.xls")
-
-redma11_A_names <- names(redma11_A) 
-redma11_B_names <- names(redma11_B) 
-redma11_C_names <- names(redma11_C) 
-redma11_D_names <- names(redma11_D) 
-redma11_E_names <- names(redma11_E) 
-
-estaciones_comunes_redma11 <- intersect(redma11_A_names,redma11_B_names) %>% intersect(redma11_C_names)  %>% intersect(redma11_C_names) %>%  intersect(redma11_D_names) %>%  intersect(redma11_E_names) 
-# quedaron 5 estaciones en común
-
-redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
-  
-# REDMET
-
-
+rama <- readRDS("/Users/Vanessa/Desktop/TESIS/DatosParaTrabajar/RAMA/rama.rds")
 ```
 
-# 2012
-
-```{r}
-# RAMA
-
-rama12_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012CO.xls")
-rama12_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NO.xls")
-rama12_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NOX.xls")
-rama12_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012O3.xls")
-rama12_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM10.xls")
-rama12_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM25.xls")
-rama12_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012SO2.xls")
-
-
-rama12_a_names <- names(rama12_a)
-rama12_b_names <- names(rama12_b)
-rama12_c_names <- names(rama12_c)
-rama12_d_names <- names(rama12_d)
-rama12_e_names <- names(rama12_e)
-rama12_f_names <- names(rama12_f)
-rama12_g_names <- names(rama12_g)
-
-estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names) 
-
-# REDA
-
-# REDMA
-
-redma12_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA/2012PbPM10.xls")
-redma12_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA/2012PbPST.xls")
-redma12_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA/2012PM10.xls")
-redma12_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA/2012PM25.xls")
-redma12_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/12REDMA/2012PST.xls")
-
-redma12_A_names <- names(redma12_A) 
-redma12_B_names <- names(redma12_B) 
-redma12_C_names <- names(redma12_C) 
-redma12_D_names <- names(redma12_D) 
-redma12_E_names <- names(redma12_E) 
-
-estaciones_comunes_redma12 <- intersect(redma12_A_names,redma12_B_names) %>% intersect(redma12_C_names)  %>% intersect(redma12_C_names) %>%  intersect(redma12_D_names) %>%  intersect(redma12_E_names) 
-# quedaron 5 estaciones en común
-
-redma12_A_tidy <- redma12_A[ ,estaciones_comunes_redma12] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
-
-```
-
-
+## Grafica Calendario 2010-2017 O3 (TLA, MER, SAG) 
 ```{r}
 
-rama10_wide <- rama10 %>% group_by(FECHA, pollutant) %>% 
+rama_wide <- rama %>% group_by(FECHA, pollutant) %>% 
                           summarise(max_value = max(valor, na.rm = TRUE))  %>% 
                           spread(pollutant, max_value)
 
-rama10_wide$FECHA <- as.Date(rama10_wide$FECHA)
+rama_wide$FECHA <- as.Date(rama_wide$FECHA)
+names(rama_wide)[1] <- "date" 
+summaryPlot(rama_wide, percentile = 0.98, na.len = 12, xlab = c("evolucion anual", "Histogramas"), main="Resumen contaminantes")
+summaryPlot(rama_wide)
 
-names(rama10_wide)[1] <- "date" 
+purrr::walk(2010:2017, function(x) calendarPlot(rama_wide, pollutant = "O3", year = x))
+```
 
-summaryPlot(rama10_wide, percentile = 0.98, na.len = 12, xlab = c("evolucion anual", "Histogramas"), main="Resumen contaminantes")
+## Serie de Tiempo 10-17 Máximos O3 (TLA, MER, SAG)
 
-summaryPlot(rama10_wide)
+```{r}
+# library(lubridate)
+# rama[1,1] %>% as.Date %>% year
 
-calendarPlot(rama10_wide, pollutant = "O3", year =2010)
+
+# extraer el año para crear grupos para la serie de tiempo sin tener que modificar FECHA a formato de fecha
+rama_wide <- rama %>% filter(pollutant == "O3") %>% group_by(FECHA) %>%
+                          summarise(max_value = mean(valor, na.rm = TRUE)) %>% 
+                          mutate(YEAR = substr(FECHA, 1, 4), MONTH = FECHA)
+
+rama_wide$YEAR <- rama_wide$FECHA %>% substr(1, 4)
+rama_wide$MONTH <- rama_wide$FECHA %>% substr(6, 7)
+rama_wide$DAY <- c(rep(1:365, 2), 1:366, rep(1:365, 3), 1:366, 1:365)
+  
+ggplot(rama_wide, aes(x = DAY, y = max_value, col = YEAR)) + geom_line()
+
+library(dygraphs)
+library(xts)
+library(dplyr)
+library(lubridate)
+
+no_feb_29 <- !grepl("02-29", rama_wide$FECHA)
+
+
+rama_wide$MONTH <- as.Date(rama_wide$FECHA) %>% month() %>% as.Date()
+
+
+
+don_wide <- rama_wide[no_feb_29, c("MONTH", "YEAR", "max_value", "DAY")] %>% spread(YEAR, max_value)
+
+fechas <- seq(as.Date('2015-01-01'), as.Date('2015-12-31'), by='1 day')
+
+don <- xts(x = don_wide[1:365,-c(1:2)], order.by = fechas) 
+
+dim(don_wide)
+length(fechas)
+
+
+widg = dygraph(don) %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+
+widg
+
+
+g <- dygraph(don, ylab = "max_value",
+             main = "time series") %>% 
+            dyRangeSelector()
+
+g
+
 ```
 
 
+### Ejemplo de compresión de Serie de Tiempo
+
+```{r}
+
+# Library
+# library(dygraphs)
+# library(xts)          # To make the convertion data-frame / xts format
+# library(dplyr)
+# library(lubridate)
+#  
+# # Read the data (hosted on the gallery website)
+# data=read.table("https://python-graph-gallery.com/wp-content/uploads/bike.csv", header=T, sep=",") %>% head(300)
+# str(data)
+#  
+# # Since my time is currently a factor, I have to convert it to a date-time format!
+# data$datetime = ymd_hms(data$datetime)
+#  
+# # Then you can create the xts format, and thus use dygraph
+# don=xts(x = data$count, order.by = data$datetime)
+# widg = dygraph(don) %>%
+#   dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+#   dyRangeSelector() %>%
+#   dyCrosshair(direction = "vertical") %>%
+#   dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+#   dyRoller(rollPeriod = 1)
+# 
+# widg
+```
 
 
-
-
-
-
-
-
-
-
-
-
+<br>
