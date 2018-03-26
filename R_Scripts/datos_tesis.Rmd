@@ -618,24 +618,24 @@ windRose(data_wide17)
 # 2011
 ```{r}
 
-# REDMA
-
-redma11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPM10.xls")
-redma11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPST.xls")
-redma11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM10.xls")
-redma11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM25.xls")
-redma11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PST.xls")
-
-redma11_A_names <- names(redma11_A) 
-redma11_B_names <- names(redma11_B) 
-redma11_C_names <- names(redma11_C) 
-redma11_D_names <- names(redma11_D) 
-redma11_E_names <- names(redma11_E) 
-
-estaciones_comunes_redma11 <- intersect(redma11_A_names,redma11_B_names) %>% intersect(redma11_C_names)  %>% intersect(redma11_C_names) %>%  intersect(redma11_D_names) %>%  intersect(redma11_E_names) 
-# quedaron 5 estaciones en común
-
-redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
+# # REDMA
+# 
+# redma11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPM10.xls")
+# redma11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPST.xls")
+# redma11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM10.xls")
+# redma11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM25.xls")
+# redma11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PST.xls")
+# 
+# redma11_A_names <- names(redma11_A) 
+# redma11_B_names <- names(redma11_B) 
+# redma11_C_names <- names(redma11_C) 
+# redma11_D_names <- names(redma11_D) 
+# redma11_E_names <- names(redma11_E) 
+# 
+# estaciones_comunes_redma11 <- intersect(redma11_A_names,redma11_B_names) %>% intersect(redma11_C_names)  %>% intersect(redma11_C_names) %>%  intersect(redma11_D_names) %>%  intersect(redma11_E_names) 
+# # quedaron 5 estaciones en común
+# 
+# redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
   
 ```
 
@@ -944,6 +944,7 @@ clean.envir("rama1")
 rama <- readRDS("/Users/Vanessa/Desktop/TESIS/DatosParaTrabajar/RAMA/rama.rds")
 ```
 
+## Grafica Calendario 2010-2017 O3 (TLA, MER, SAG) 
 ```{r}
 
 rama_wide <- rama %>% group_by(FECHA, pollutant) %>% 
@@ -956,8 +957,94 @@ summaryPlot(rama_wide, percentile = 0.98, na.len = 12, xlab = c("evolucion anual
 summaryPlot(rama_wide)
 
 purrr::walk(2010:2017, function(x) calendarPlot(rama_wide, pollutant = "O3", year = x))
-calendarPlot(rama_wide, pollutant = "O3", year = 2010)
-calendarPlot(rama_wide, pollutant = "O3", year = 2014)
+```
+
+## Serie de Tiempo 10-17 Máximos O3 (TLA, MER, SAG)
+
+```{r}
+# library(lubridate)
+# rama[1,1] %>% as.Date %>% year
+
+
+# extraer el año para crear grupos para la serie de tiempo sin tener que modificar FECHA a formato de fecha
+rama_wide <- rama %>% filter(pollutant == "O3") %>% group_by(FECHA) %>%
+                          summarise(max_value = mean(valor, na.rm = TRUE)) %>% 
+                          mutate(YEAR = substr(FECHA, 1, 4), MONTH = FECHA)
+
+rama_wide$YEAR <- rama_wide$FECHA %>% substr(1, 4)
+rama_wide$MONTH <- rama_wide$FECHA %>% substr(6, 7)
+rama_wide$DAY <- c(rep(1:365, 2), 1:366, rep(1:365, 3), 1:366, 1:365)
+  
+ggplot(rama_wide, aes(x = DAY, y = max_value, col = YEAR)) + geom_line()
+
+library(dygraphs)
+library(xts)
+library(dplyr)
+library(lubridate)
+
+no_feb_29 <- !grepl("02-29", rama_wide$FECHA)
+
+
+rama_wide$MONTH <- as.Date(rama_wide$FECHA) %>% month() %>% as.Date()
+
+
+
+don_wide <- rama_wide[no_feb_29, c("MONTH", "YEAR", "max_value", "DAY")] %>% spread(YEAR, max_value)
+
+fechas <- seq(as.Date('2015-01-01'), as.Date('2015-12-31'), by='1 day')
+
+don <- xts(x = don_wide[1:365,-c(1:2)], order.by = fechas) 
+
+dim(don_wide)
+length(fechas)
+
+
+widg = dygraph(don) %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+
+widg
+
+
+g <- dygraph(don, ylab = "max_value",
+             main = "time series") %>% 
+            dyRangeSelector()
+
+g
+
+```
+
+
+### Ejemplo de compresión de Serie de Tiempo
+
+```{r}
+
+# Library
+# library(dygraphs)
+# library(xts)          # To make the convertion data-frame / xts format
+# library(dplyr)
+# library(lubridate)
+#  
+# # Read the data (hosted on the gallery website)
+# data=read.table("https://python-graph-gallery.com/wp-content/uploads/bike.csv", header=T, sep=",") %>% head(300)
+# str(data)
+#  
+# # Since my time is currently a factor, I have to convert it to a date-time format!
+# data$datetime = ymd_hms(data$datetime)
+#  
+# # Then you can create the xts format, and thus use dygraph
+# don=xts(x = data$count, order.by = data$datetime)
+# widg = dygraph(don) %>%
+#   dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+#   dyRangeSelector() %>%
+#   dyCrosshair(direction = "vertical") %>%
+#   dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+#   dyRoller(rollPeriod = 1)
+# 
+# widg
 ```
 
 
