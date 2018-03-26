@@ -643,40 +643,43 @@ redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, 
 
 ```{r}
 # RAMA
-rama10_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010CO.xls", sheet = 1, header = T)
-rama10_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NO.xls", sheet = 1, header = T)
-rama10_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NOX.xls", sheet = 1, header = T)
-rama10_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010O3.xls", sheet = 1, header = T)
-rama10_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM10.xls", sheet = 1, header = T)
-rama10_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM25.xls", sheet = 1, header = T)
-rama10_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010SO2.xls", sheet = 1, header = T)
-
-rama10_a_names <- names(rama10_a)
-rama10_b_names <- names(rama10_b)
-rama10_c_names <- names(rama10_c)
-rama10_d_names <- names(rama10_d)
-rama10_e_names <- names(rama10_e)
-rama10_f_names <- names(rama10_f)
-rama10_g_names <- names(rama10_g)
-
-estaciones_comunes_rama10 <- intersect(rama10_a_names,rama10_b_names) %>% intersect(rama10_c_names)  %>% intersect(rama10_d_names) %>%  intersect(rama10_e_names) %>% intersect(rama10_f_names) %>%  intersect(rama10_g_names) 
-# quedaron 3 estaciones en común
-
-rama10_a_tidy <- rama10_a[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
-rama10_b_tidy <- rama10_b[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "NO")
-rama10_c_tidy <- rama10_c[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "NOX")
-rama10_d_tidy <- rama10_d[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "O3")
-rama10_e_tidy <- rama10_e[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "PM10")
-rama10_f_tidy <- rama10_f[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "PM25")
-rama10_g_tidy <- rama10_g[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "SO2")
-
-rama10 <- rbind(rama10_a_tidy, rama10_b_tidy, rama10_c_tidy, rama10_d_tidy, rama10_e_tidy, rama10_f_tidy, rama10_g_tidy)
-
+# rama10_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010CO.xls", sheet = 1, header = T)
+# rama10_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NO.xls", sheet = 1, header = T)
+# rama10_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NOX.xls", sheet = 1, header = T)
+# rama10_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010O3.xls", sheet = 1, header = T)
+# rama10_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM10.xls", sheet = 1, header = T)
+# rama10_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010PM25.xls", sheet = 1, header = T)
+# rama10_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010SO2.xls", sheet = 1, header = T)
+# 
+# rama10_a_names <- names(rama10_a)
+# rama10_b_names <- names(rama10_b)
+# rama10_c_names <- names(rama10_c)
+# rama10_d_names <- names(rama10_d)
+# rama10_e_names <- names(rama10_e)
+# rama10_f_names <- names(rama10_f)
+# rama10_g_names <- names(rama10_g)
+# 
+# estaciones_comunes_rama10 <- intersect(rama10_a_names,rama10_b_names) %>% intersect(rama10_c_names)  %>% intersect(rama10_d_names) %>%  intersect(rama10_e_names) %>% intersect(rama10_f_names) %>%  intersect(rama10_g_names) 
+# # quedaron 3 estaciones en común
+# 
+# rama10_a_tidy <- rama10_a[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+# rama10_b_tidy <- rama10_b[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+# rama10_c_tidy <- rama10_c[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+# rama10_d_tidy <- rama10_d[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+# rama10_e_tidy <- rama10_e[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+# rama10_f_tidy <- rama10_f[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+# rama10_g_tidy <- rama10_g[ ,estaciones_comunes_rama10] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+# 
+# rama10 <- rbind(rama10_a_tidy, rama10_b_tidy, rama10_c_tidy, rama10_d_tidy, rama10_e_tidy, rama10_f_tidy, rama10_g_tidy)
 # saveRDS(rama10, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
+
 rama10 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 
 
 # 2011
+
+col_comunes <- c("FECHA", "HORA", "TLA", "MER", "SAG")
+
 rama11_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011CO.xls")
 rama11_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NO.xls")
 rama11_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NOX.xls")
@@ -684,8 +687,7 @@ rama11_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011O3.xls"
 rama11_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM10.xls")
 rama11_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM25.xls")
 rama11_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011SO2.xls")
-
-
+ 
 rama11_a_names <- names(rama11_a)
 rama11_b_names <- names(rama11_b)
 rama11_c_names <- names(rama11_c)
@@ -694,9 +696,25 @@ rama11_e_names <- names(rama11_e)
 rama11_f_names <- names(rama11_f)
 rama11_g_names <- names(rama11_g)
 
-estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names) 
+estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names)
+
+rama11_a_tidy <- rama11_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama11_b_tidy <- rama11_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama11_c_tidy <- rama11_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama11_d_tidy <- rama11_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama11_e_tidy <- rama11_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama11_f_tidy <- rama11_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama11_g_tidy <- rama11_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama11 <- rbind(rama11_a_tidy, rama11_b_tidy, rama11_c_tidy, rama11_d_tidy, rama11_e_tidy, rama11_f_tidy, rama11_g_tidy)
+saveRDS(rama11, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama11.rds")
+clean.envir("rama11_")
+
+rama11 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama11.rds")
+
 
 # 2012
+
 rama12_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012CO.xls")
 rama12_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NO.xls")
 rama12_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NOX.xls")
@@ -705,7 +723,7 @@ rama12_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM10.xl
 rama12_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM25.xls")
 rama12_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012SO2.xls")
 
-
+ 
 rama12_a_names <- names(rama12_a)
 rama12_b_names <- names(rama12_b)
 rama12_c_names <- names(rama12_c)
@@ -713,8 +731,23 @@ rama12_d_names <- names(rama12_d)
 rama12_e_names <- names(rama12_e)
 rama12_f_names <- names(rama12_f)
 rama12_g_names <- names(rama12_g)
+ 
+estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names)
 
-estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names) 
+rama12_a_tidy <- rama12_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama12_b_tidy <- rama12_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama12_c_tidy <- rama12_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama12_d_tidy <- rama12_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama12_e_tidy <- rama12_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama12_f_tidy <- rama12_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama12_g_tidy <- rama12_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+  
+rama12 <- rbind(rama12_a_tidy, rama12_b_tidy, rama12_c_tidy, rama12_d_tidy, rama12_e_tidy, rama12_f_tidy, rama12_g_tidy)
+saveRDS(rama12, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama12.rds")
+clean.envir("rama12_")
+
+rama12 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama12.rds")
+
 
 # 2013
 
@@ -735,6 +768,20 @@ rama13_f_names <- names(rama13_f)
 rama13_g_names <- names(rama13_g)
 
 estaciones_comunes_rama13 <- intersect(rama13_a_names,rama13_b_names) %>% intersect(rama13_c_names)  %>% intersect(rama13_d_names) %>%  intersect(rama13_e_names) %>% intersect(rama13_f_names) %>%  intersect(rama13_g_names)
+
+rama13_a_tidy <- rama13_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama13_b_tidy <- rama13_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama13_c_tidy <- rama13_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama13_d_tidy <- rama13_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama13_e_tidy <- rama13_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama13_f_tidy <- rama13_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama13_g_tidy <- rama13_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama13 <- rbind(rama13_a_tidy, rama13_b_tidy, rama13_c_tidy, rama13_d_tidy, rama13_e_tidy, rama13_f_tidy, rama13_g_tidy)
+saveRDS(rama13, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama13.rds")
+clean.envir("rama13_")
+
+rama13 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama13.rds")
 
 
 # 2014
@@ -757,6 +804,21 @@ rama14_g_names <- names(rama14_g)
 
 estaciones_comunes_rama14 <- intersect(rama14_a_names,rama14_b_names) %>% intersect(rama14_c_names)  %>% intersect(rama14_d_names) %>%  intersect(rama14_e_names) %>% intersect(rama14_f_names) %>%  intersect(rama14_g_names)
 
+rama14_a_tidy <- rama14_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama14_b_tidy <- rama14_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama14_c_tidy <- rama14_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama14_d_tidy <- rama14_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama14_e_tidy <- rama14_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama14_f_tidy <- rama14_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama14_g_tidy <- rama14_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama14 <- rbind(rama14_a_tidy, rama14_b_tidy, rama14_c_tidy, rama14_d_tidy, rama14_e_tidy, rama14_f_tidy, rama14_g_tidy)
+saveRDS(rama12, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama14.rds")
+clean.envir("rama14_")
+
+rama14 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama14.rds")
+
+
 # 2015
 rama15_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015CO.xls")
 rama15_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/15RAMA/2015NO.xls")
@@ -776,6 +838,21 @@ rama15_g_names <- names(rama15_g)
 
 estaciones_comunes_rama15 <- intersect(rama15_a_names,rama15_b_names) %>% intersect(rama15_c_names)  %>% intersect(rama15_d_names) %>%  intersect(rama15_e_names) %>% intersect(rama15_f_names) %>%  intersect(rama15_g_names)
 
+rama15_a_tidy <- rama15_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama15_b_tidy <- rama15_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama15_c_tidy <- rama15_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama15_d_tidy <- rama15_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama15_e_tidy <- rama15_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama15_f_tidy <- rama15_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama15_g_tidy <- rama15_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama15 <- rbind(rama15_a_tidy, rama15_b_tidy, rama15_c_tidy, rama15_d_tidy, rama15_e_tidy, rama15_f_tidy, rama15_g_tidy)
+saveRDS(rama15, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama15.rds")
+clean.envir("rama15_")
+
+rama15 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama15.rds")
+
+
 # 2016
 rama16_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016CO.xls")
 rama16_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/16RAMA/2016NO.xls")
@@ -794,6 +871,20 @@ rama16_f_names <- names(rama16_f)
 rama16_g_names <- names(rama16_g)
 
 estaciones_comunes_rama16 <- intersect(rama16_a_names,rama16_b_names) %>% intersect(rama16_c_names)  %>% intersect(rama16_d_names) %>%  intersect(rama16_e_names) %>% intersect(rama16_f_names) %>%  intersect(rama16_g_names)
+
+rama16_a_tidy <- rama16_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama16_b_tidy <- rama16_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama16_c_tidy <- rama16_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama16_d_tidy <- rama16_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama16_e_tidy <- rama16_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama16_f_tidy <- rama16_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama16_g_tidy <- rama16_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama16 <- rbind(rama16_a_tidy, rama16_b_tidy, rama16_c_tidy, rama16_d_tidy, rama16_e_tidy, rama16_f_tidy, rama16_g_tidy)
+saveRDS(rama16, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama16.rds")
+clean.envir("rama16_")
+
+rama16 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama16.rds")
 
 # 2017
 
@@ -815,12 +906,38 @@ rama17_g_names <- names(rama17_g)
 
 estaciones_comunes_rama17 <- intersect(rama17_a_names,rama17_b_names) %>% intersect(rama17_c_names)  %>% intersect(rama17_d_names) %>%  intersect(rama17_e_names) %>% intersect(rama17_f_names) %>%  intersect(rama17_g_names)
 
+rama17_a_tidy <- rama17_a[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "CO")
+rama17_b_tidy <- rama17_b[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NO")
+rama17_c_tidy <- rama17_c[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "NOX")
+rama17_d_tidy <- rama17_d[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "O3")
+rama17_e_tidy <- rama17_e[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM10")
+rama17_f_tidy <- rama17_f[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "PM25")
+rama17_g_tidy <- rama17_g[ ,col_comunes] %>% gather(estaciones, valor, c(TLA,MER,SAG), -FECHA) %>% mutate(pollutant = "SO2")
+ 
+rama17 <- rbind(rama17_a_tidy, rama17_b_tidy, rama17_c_tidy, rama17_d_tidy, rama17_e_tidy, rama17_f_tidy, rama17_g_tidy)
+saveRDS(rama17, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama17.rds")
+clean.envir("rama17_")
+
+rama17 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama17.rds")
+
+
+# juntar todos los años de RAMA por sus estaciones comunes
+
 estaciones_comunes_rama <- intersect(estaciones_comunes_rama10, estaciones_comunes_rama11) %>% intersect(estaciones_comunes_rama12) %>%  intersect(estaciones_comunes_rama13) %>% intersect(estaciones_comunes_rama14) %>% intersect(estaciones_comunes_rama15) %>% intersect(estaciones_comunes_rama16) %>% intersect(estaciones_comunes_rama17)
+ 
+dim(rama10)
+dim(rama11)
+dim(rama12)
+dim(rama13)
+dim(rama14)
+dim(rama15)
+dim(rama16)
+dim(rama17)
+
+rama <- rbind(rama10, rama11, rama12, rama13, rama14, rama15, rama16, rama17)
 
 
-
-rama_tidy <- rama13_a[ ,estaciones_comunes_rama] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "?")
-
+clean.envir("rama1")
 ```
 
 # REDMA
