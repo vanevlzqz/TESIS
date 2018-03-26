@@ -234,7 +234,6 @@ library(openair)
 # NO HAY 2017
 ```
 
-
 ```{r}
 redda <- rbind(redda10, redda11, redda13, redda14, redda15, redda16) # Arreglar REDDA 12
 # redda$FECHA <- as.Date(redda$FECHA)
@@ -246,14 +245,11 @@ redda <- read.csv("/Users/Vanessa/Desktop/Datos_Excel/redda.csv")
 ```
 
 # Serie de Tiempo por Pollutant (17) con REDDA
-
 ```{r}
 ggplotly(ggplot(redda, aes(x = FECHA, y = valor, color = estaciones)) + geom_line() + facet_grid(pollutant ~ .) + theme_bw() )
 ```
 
-
 # D-V-J
-
 ```{r, eval = FALSE}
 
 # datos tiempo real en IMECA
@@ -618,14 +614,35 @@ windRose(data_wide17)
 
 
 
-#### RAMA
 
-
+# 2011
 ```{r}
 
+# REDMA
+
+redma11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPM10.xls")
+redma11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPST.xls")
+redma11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM10.xls")
+redma11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM25.xls")
+redma11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PST.xls")
+
+redma11_A_names <- names(redma11_A) 
+redma11_B_names <- names(redma11_B) 
+redma11_C_names <- names(redma11_C) 
+redma11_D_names <- names(redma11_D) 
+redma11_E_names <- names(redma11_E) 
+
+estaciones_comunes_redma11 <- intersect(redma11_A_names,redma11_B_names) %>% intersect(redma11_C_names)  %>% intersect(redma11_C_names) %>%  intersect(redma11_D_names) %>%  intersect(redma11_E_names) 
+# quedaron 5 estaciones en común
+
+redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
+  
+```
 
 # RAMA
 
+```{r}
+# RAMA
 rama10_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010CO.xls", sheet = 1, header = T)
 rama10_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NO.xls", sheet = 1, header = T)
 rama10_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/10RAMA/2010NOX.xls", sheet = 1, header = T)
@@ -658,6 +675,7 @@ rama10 <- rbind(rama10_a_tidy, rama10_b_tidy, rama10_c_tidy, rama10_d_tidy, rama
 # saveRDS(rama10, "/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 rama10 <- readRDS("/Users/Vanessa/Desktop/Datos_Excel/RAMA/rama10.rds")
 
+
 # 2011
 rama11_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011CO.xls")
 rama11_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NO.xls")
@@ -667,6 +685,7 @@ rama11_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM10.xl
 rama11_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM25.xls")
 rama11_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011SO2.xls")
 
+
 rama11_a_names <- names(rama11_a)
 rama11_b_names <- names(rama11_b)
 rama11_c_names <- names(rama11_c)
@@ -675,17 +694,17 @@ rama11_e_names <- names(rama11_e)
 rama11_f_names <- names(rama11_f)
 rama11_g_names <- names(rama11_g)
 
-estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names)
+estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names) 
 
 # 2012
-
 rama12_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012CO.xls")
 rama12_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NO.xls")
 rama12_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NOX.xls")
-rama12_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/20120O3.xls")
+rama12_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012O3.xls")
 rama12_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM10.xls")
 rama12_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM25.xls")
 rama12_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012SO2.xls")
+
 
 rama12_a_names <- names(rama12_a)
 rama12_b_names <- names(rama12_b)
@@ -695,8 +714,7 @@ rama12_e_names <- names(rama12_e)
 rama12_f_names <- names(rama12_f)
 rama12_g_names <- names(rama12_g)
 
-estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names)
-
+estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names) 
 
 # 2013
 
@@ -800,87 +818,13 @@ estaciones_comunes_rama17 <- intersect(rama17_a_names,rama17_b_names) %>% inters
 estaciones_comunes_rama <- intersect(estaciones_comunes_rama10, estaciones_comunes_rama11) %>% intersect(estaciones_comunes_rama12) %>%  intersect(estaciones_comunes_rama13) %>% intersect(estaciones_comunes_rama14) %>% intersect(estaciones_comunes_rama15) %>% intersect(estaciones_comunes_rama16) %>% intersect(estaciones_comunes_rama17)
 
 
-rama_tidy <- 
+
 rama_tidy <- rama13_a[ ,estaciones_comunes_rama] %>% gather(estaciones, valor, TLA:SAG, -FECHA) %>% mutate(pollutant = "?")
 
 ```
 
-
-
-# 2011
-```{r}
-# RAMA
-
-rama11_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011CO.xls")
-rama11_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NO.xls")
-rama11_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011NOX.xls")
-rama11_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011O3.xls")
-rama11_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM10.xls")
-rama11_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011PM25.xls")
-rama11_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/11RAMA/2011SO2.xls")
-
-
-rama11_a_names <- names(rama11_a)
-rama11_b_names <- names(rama11_b)
-rama11_c_names <- names(rama11_c)
-rama11_d_names <- names(rama11_d)
-rama11_e_names <- names(rama11_e)
-rama11_f_names <- names(rama11_f)
-rama11_g_names <- names(rama11_g)
-
-estaciones_comunes_rama11 <- intersect(rama11_a_names,rama11_b_names) %>% intersect(rama11_c_names)  %>% intersect(rama11_d_names) %>%  intersect(rama11_e_names) %>% intersect(rama11_f_names) %>%  intersect(rama11_g_names) 
-
-# REDA
-
 # REDMA
-
-redma11_A <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPM10.xls")
-redma11_B <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PbPST.xls")
-redma11_C <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM10.xls")
-redma11_D <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PM25.xls")
-redma11_E <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/REDMA/11REDMA/2011PST.xls")
-
-redma11_A_names <- names(redma11_A) 
-redma11_B_names <- names(redma11_B) 
-redma11_C_names <- names(redma11_C) 
-redma11_D_names <- names(redma11_D) 
-redma11_E_names <- names(redma11_E) 
-
-estaciones_comunes_redma11 <- intersect(redma11_A_names,redma11_B_names) %>% intersect(redma11_C_names)  %>% intersect(redma11_C_names) %>%  intersect(redma11_D_names) %>%  intersect(redma11_E_names) 
-# quedaron 5 estaciones en común
-
-redma11_A_tidy <- redma11_A[ ,estaciones_comunes] %>% gather(estaciones, valor, MER:UIZ, -FECHA) %>% mutate(pollutant = "?")
-  
-# REDMET
-
-
-```
-
-# 2012
-
 ```{r}
-# RAMA
-
-rama12_a <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012CO.xls")
-rama12_b <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NO.xls")
-rama12_c <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012NOX.xls")
-rama12_d <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012O3.xls")
-rama12_e <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM10.xls")
-rama12_f <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012PM25.xls")
-rama12_g <- read.xls("/Users/Vanessa/Desktop/Datos_Excel/RAMA/12RAMA/2012SO2.xls")
-
-
-rama12_a_names <- names(rama12_a)
-rama12_b_names <- names(rama12_b)
-rama12_c_names <- names(rama12_c)
-rama12_d_names <- names(rama12_d)
-rama12_e_names <- names(rama12_e)
-rama12_f_names <- names(rama12_f)
-rama12_g_names <- names(rama12_g)
-
-estaciones_comunes_rama12 <- intersect(rama12_a_names,rama12_b_names) %>% intersect(rama12_c_names)  %>% intersect(rama12_d_names) %>%  intersect(rama12_e_names) %>% intersect(rama12_f_names) %>%  intersect(rama12_g_names) 
-
-# REDA
 
 # REDMA
 
@@ -911,13 +855,9 @@ rama10_wide <- rama10 %>% group_by(FECHA, pollutant) %>%
                           spread(pollutant, max_value)
 
 rama10_wide$FECHA <- as.Date(rama10_wide$FECHA)
-
 names(rama10_wide)[1] <- "date" 
-
 summaryPlot(rama10_wide, percentile = 0.98, na.len = 12, xlab = c("evolucion anual", "Histogramas"), main="Resumen contaminantes")
-
 summaryPlot(rama10_wide)
-
 calendarPlot(rama10_wide, pollutant = "O3", year =2010)
 ```
 
