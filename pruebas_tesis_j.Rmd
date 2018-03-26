@@ -1,0 +1,200 @@
+---
+title: "Tesis"
+author: "Vanessa Velázquez Mojica"
+date: "31/1/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(ggplot2)
+library(plotly)
+library(stringr)
+library(plyr)
+library(dplyr)
+library(class) # KNN
+library(ROCR)
+library(caret) # ConfusionMatrix
+library(knitr) 
+library(tidyr) # para manipulacion de datos
+library(R.oo)
+library(prettydoc)
+library(purrr)
+library(rpart)
+library(randomForest)
+library(neuralnet)
+library(lubridate)
+
+```
+
+```{r}
+# Carga del DataSet
+prom_ps <- read_csv("/Users/Vanessa/Desktop/TESIS/Datos/Promedios 24 Hrs/prom_ps.csv")
+prom_ps$Date<-as.Date(prom_ps$Date)
+names(prom_ps) <- c("date", "id_station", "id_param_ps", "value_ps", "unit_ps")
+head(prom_ps)
+
+
+
+prom_so2 <- read_csv("/Users/Vanessa/Desktop/TESIS/Datos/Promedios 24 Hrs/Dióxido de Azufre SO2/prome_so2.csv")
+prom_so2$Date<-as.Date(prom_so2$Date)
+names(prom_so2) <- c("date", "id_station", "id_param_so2", "value_so2", "unit_so2")
+head(prom_so2)
+
+prom_24h <- left_join(prom_ps, prom_so2)
+
+prom_24h <- prom_24h[complete.cases(prom_24h), ]
+
+hist(prom_24h$value_ps)
+max(prom_24h$value_ps)
+table(prom_24h$value_ps)
+
+hist(prom_24h$value_so2)
+max(prom_so2$value_so2)
+table(prom_24h$value_so2)
+```
+
+
+
+```{r}
+
+```
+
+
+### DATA PROFILING
+
+```{r}
+
+#queremos saber que variables son categoricas y cuales numericas
+classes <- sapply(prom_ps, function(x) class(x))
+
+categoric_cols <- prom_ps[,which(classes %in% c("character", "factor"))]
+numeric_cols <- prom_ps[, -which(classes %in% c("character", "factor"))]
+
+#cuantos valores unicos --cardinalidad
+uniques_num <- sapply(numeric_cols, function(x) unique(x) %>% length())
+uniques_num <- as.data.frame(uniques_num)
+
+uniques_cat <- sapply(categoric_cols, function(x) unique(x) %>% length())
+uniques_cat <- as.data.frame(uniques_cat)
+
+#valores unicos
+uniques_values_num <- sapply(numeric_cols, function(x) unique(x))
+uniques_values_cat <- sapply(categoric_cols, function(x) unique(x))
+
+#proporcion valores unicos - uniqueness
+uniqueness_num <-  round(uniques_num/nrow(prom_ps)* 100, 2)
+uniqueness_num <- as.data.frame(uniqueness_num)
+
+uniqueness_cat <-  round(uniques_cat/nrow(prom_ps) * 100, 2)
+uniqueness_cat <- as.data.frame(uniqueness_cat)
+                                
+#checamos si hay vacios 
+nan_num <- sapply(numeric_cols, function(x) sum(is.na(x)))
+nan_num <- as.data.frame(nan_num)
+
+nan_cat <- sapply(categoric_cols, function(x) sum(is.na(x)))
+nan_cat <- as.data.frame(nan_cat)
+
+#para sacar la moda, redondeamos a 2 digitos
+my_mode <- function(x, na.rm = T){
+  if (class(x) %in% c("character", "factor")) {
+    table(x) %>%
+      which.max() %>%
+      names()
+  }
+  else {
+    table(round(x, 2)) %>%
+      which.max() %>%
+      names()
+  }
+}
+
+#moda
+modes_num <- sapply(numeric_cols, function(x) my_mode(x, T))
+modes_num <- as.data.frame(modes_num)
+
+modes_cat <- sapply(categoric_cols, function(x) my_mode(x, T))
+modes_cat <- as.data.frame(modes_cat)
+
+#min 
+mins <- sapply(numeric_cols, function(x) min(x, na.rm = T))
+mins <- as.data.frame(mins)
+
+#max
+maxs <- sapply(numeric_cols, function(x) max(x, na.rm = T))
+maxs <- as.data.frame(maxs)
+
+#mean
+means <- sapply(numeric_cols, function(x) mean(x, na.rm = T))
+means <- as.data.frame(means)
+
+#median
+medians <- sapply(numeric_cols, function(x) median(x, na.rm = T))
+medians <- as.data.frame(medians)
+
+#1st quantile
+first_qtls <- sapply(numeric_cols, function(x) quantile(x,na.rm = T)[2]) #revisa la funcion quantile!
+first_qtls <- as.data.frame(first_qtls)
+
+#3rd quantile
+third_qtls <- sapply(numeric_cols, function(x) quantile(x, na.rm = T)[4]) 
+third_qtls <- as.data.frame(third_qtls)
+
+#sd
+sds <- sapply(numeric_cols, function(x) sd(x, na.rm = T))
+sds <- as.data.frame(sds)
+
+
+###generamos nuestra tabla de data profiling
+df_categoric <- cbind(uniques_cat, uniqueness_cat, nan_cat, modes_cat)
+#no me gusta que tengan en la columna cat... 
+names(df_categoric) <- str_replace_all(names(df_categoric), "_cat", "")
+names(df_categoric)[2]<-"uniqueness"
+
+df_numeric <- cbind(uniques_num, uniqueness_num, nan_num, mins, maxs, means,
+                    sds, medians, modes_num, first_qtls, third_qtls) 
+names(df_numeric) <- str_replace_all(names(df_numeric), "_num", "")
+names(df_numeric)[2]<-"uniqueness"
+```
+
+
+```{r}
+# temp = list.files(pattern = "*.csv")
+# myfiles = lapply(temp, read.delim)
+# ```
+
+# ```{r}
+# promspartsusp <- 
+#   rbind.fill(lapply(list.files(path = paste("/Users/Vanessa/Desktop/TESIS/Datos/Promedios 24 Hrs/Particulas Suspendidas PM10 y PM2.5"), "csv"), function(fname)
+#     {
+#       fpath <- paste(paste("/Users/Vanessa/Desktop/TESIS/Datos/Promedios 24 Hrs/Particulas Suspendidas PM10 y PM2.5"),fname)
+#       pps <- read.csv(fpath)
+#       pps
+#     }
+#     ))
+```
+
+## R Markdown
+
+<http://rmarkdown.rstudio.com>.
+shortcut para chunk: ^OptionI
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
