@@ -15,6 +15,8 @@ library(readr)
 library(openair)
 library(stats)
 library(aire.zmvm)
+library(leaflet)
+library(geosphere)
 ```
 
 # REDDA - Red de Depósito Atmosférico
@@ -1109,8 +1111,11 @@ clean.envir("rama1")
 ```
 
 Se cargan los datos de RAMA como RDS desde el 2010 hasta 2017 unicamente con las estaciones: TLA MER SAG
+
 ```{r}
 rama <- readRDS("/Users/Vanessa/Desktop/TESIS/DatosParaTrabajar/RAMA/rama.rds")
+
+
 ```
 
 ## Gráficas de Calendario 2010-2017 de  O3 (TLA, MER, SAG) 
@@ -1196,6 +1201,54 @@ wds <- ggplot(ene1_10, aes(x = HORA, y = WDS, color = estaciones, alpha = 0.005)
 wds
 ```
 
+### Temperatura por hora (TMP) - 01/01/10 (TLA, MER, SAG)
+```{r}
+h_temp <- ggplot(ene1_10, aes(x = HORA, y = TMP, color = estaciones, alpha = 0.005)) + geom_line() + theme_bw()
+h_temp
+```
+
+```{r}
+subset(ene1_10, pollutant == "O3")
+o3_tmp <- ggplot(ene1_10, aes(x = TMP, y = valor, color = estaciones, alpha = 0.005)) + geom_line() + theme_bw()
+o3_tmp
+
+
+subset(ene1_10, pollutant == "CO")
+co_tmp <- ggplot(ene1_10, aes(x = TMP, y = valor, color = estaciones, alpha = 0.005)) + geom_line() + theme_bw()
+co_tmp
+
+subset(ene1_10, pollutant == "NO")
+no_tmp <- ggplot(ene1_10, aes(x = TMP, y = valor, color = estaciones, alpha = 0.005)) + geom_line() + theme_bw()
+no_tmp
+
+
+```
+
+
+
+
+## Gráficas por hora - 03/05/16
+
+
+# Estaciones
+
+```{r}
+est <- read.csv("/Users/Vanessa/Desktop/CSV/estaciones.csv")
+names(est)[1] <- "cve_est"
+mapa <- leaflet(data = est) %>% 
+        addProviderTiles("CartoDB.Positron") %>% 
+        addMarkers( ~ longitud, ~latitud, label=est$nom_estac) 
+        
+mapa
+
+# DISTANCIA
+distm( x = c(est$longitud, est$latitud), y = c(est$longitud, est$latitud), fun = distHaversine())
+
+list_coords <- split(est[,c("longitud", "latitud")], seq(nrow(est[,c("longitud", "latitud")])))
+purrr::map(1:nrow(est), function(y) purrr::map(list_coords, function(x) distm(list_coords[[y]], x))) %>% Reduce(rbind,.) %>% unlist()
+
+
+```
 
 ## Serie de Tiempo 10-17 Máximos O3 (TLA, MER, SAG)
 ```{r}
@@ -1271,6 +1324,8 @@ Los días con los valores más altos de ozono registrados:
 
 rama$FECHA <- as.Date(rama$FECHA)
 rama <- rama[rama$valor >= 0, ]
+
+
 r <- rama[80257:99984,]
 sort(r$valor, decreasing = T)
 
@@ -1278,6 +1333,8 @@ head(r)
 
 maxo3 <- ggplot(r, aes(x=FECHA, y=valor, color = estaciones, alpha=0.05)) + geom_line() + theme_bw()
 maxo3
+
+
 
 dias_max_o3 <- read.csv("/Users/Vanessa/Desktop/CSV/pollutants_dias_de_max_o3.csv")
 dias_max_o3 <- dias_max_o3[,-5]
@@ -1337,6 +1394,7 @@ time
 # 
 # widg
 ```
+
 
 
 
